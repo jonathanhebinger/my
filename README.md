@@ -1,0 +1,10 @@
+- states and actions tracking for myself
+  - states and actions logs
+  - states and actions creation
+  - states and actions analysis
+  - grouping
+- states and actions tracking for others
+  - scalability
+  - optimisations
+  - security
+  - sharing

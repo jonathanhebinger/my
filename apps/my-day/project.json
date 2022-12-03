@@ -1,0 +1,82 @@
+{
+  "name": "my-day",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/my-day/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/my-day",
+        "index": "apps/my-day/src/index.html",
+        "baseHref": "/",
+        "main": "apps/my-day/src/main.tsx",
+        "polyfills": "apps/my-day/src/polyfills.ts",
+        "tsConfig": "apps/my-day/tsconfig.app.json",
+        "assets": ["apps/my-day/src/favicon.ico", "apps/my-day/src/assets"],
+        "styles": [],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/my-day/src/environments/environment.ts",
+              "with": "apps/my-day/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "my-day:build",
+        "hmr": true,
+        "proxyConfig": "apps/my-day/proxy.conf.json"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "my-day:build:development"
+        },
+        "production": {
+          "buildTarget": "my-day:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/my-day/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/my-day"],
+      "options": {
+        "jestConfig": "apps/my-day/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

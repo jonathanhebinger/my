@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@my/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@my/shared/firebase": ["libs/shared/firebase/src/index.ts"],
+      "@my/shared/helpers": ["libs/shared/helpers/src/index.ts"],
+      "@my/shared/redux": ["libs/shared/redux/src/index.ts"],
+      "@my/shared/types": ["libs/shared/types/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
