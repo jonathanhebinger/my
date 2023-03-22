@@ -3,8 +3,8 @@
 import { Link } from '@mui/material'
 import { PropsWithChildren } from 'react'
 import { ReactEditor, useReadOnly, useSlateStatic } from 'slate-react'
-import { useWikiPageDatabase } from '../../hooks/usePageDatabase'
-import { useWikiOpenedPageList } from '../../hooks/usePageOpenedList'
+import { useNotebookNoteContext } from '../../hooks/useNote'
+import { useOpenedNoteList } from '../../hooks/useNoteOpenedList'
 import { PageLinkElement } from '../../types/slate'
 
 export function ElementPageLink({
@@ -15,8 +15,8 @@ export function ElementPageLink({
   element: PageLinkElement
   attributes: any
 }>) {
-  const { getOne } = useWikiPageDatabase()
-  const { open } = useWikiOpenedPageList()
+  const { getOne } = useNotebookNoteContext()
+  const { open } = useOpenedNoteList()
 
   const editor = useSlateStatic()
   const readOnly = useReadOnly()
@@ -25,7 +25,7 @@ export function ElementPageLink({
 
   const handleClick = () => {
     if (readOnly) {
-      open(page.uuid)
+      open(page.id)
     } else {
       const path = ReactEditor.findPath(editor, element)
 

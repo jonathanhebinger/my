@@ -3,9 +3,6 @@ import { Color, Icon } from './util'
 
 export type StateNumber = StateBase & {
   type: 'number'
-  typeNumber: StateNumberData
-}
-export type StateNumberData = {
   unit: string
   step: number
   min: number

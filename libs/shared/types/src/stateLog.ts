@@ -1,8 +1,8 @@
 import { StateUuid } from './state'
-import { Uuid } from './uuid'
+import { Id } from './uuid'
 
 export type StateLog = {
-  uuid: Uuid<'state.log'>
+  uuid: Id
   type: StateUuid
   data: number
   date: number

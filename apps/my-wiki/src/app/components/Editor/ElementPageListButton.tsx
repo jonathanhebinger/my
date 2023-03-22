@@ -6,12 +6,12 @@ import {
   DialogTitle,
   Stack,
 } from '@mui/material'
+import { Id, NoteDto } from '@my/shared/types'
 import { useState } from 'react'
 import { Editor, Element, Node, Path, Transforms } from 'slate'
 import { useSlate } from 'slate-react'
 import { PageListElement } from '../../types/slate'
-import { WikiPageEntity } from '../../types/wiki'
-import PageSelector from '../PageSelector'
+import PageSelector from '../NoteSelector'
 
 function match(n: Node) {
   return !Editor.isEditor(n) && Element.isElement(n) && n.type === 'page-list'
@@ -61,7 +61,7 @@ export default function PageListButton() {
 
   const [open, setOpen] = useState(false)
   const [path, setPath] = useState<Path>()
-  const [tags, setTags] = useState<string[]>([])
+  const [tags, setTags] = useState<Id[]>([])
 
   function handleOpen() {
     const pair = listSelect(editor)
@@ -80,11 +80,16 @@ export default function PageListButton() {
     setTags([])
     setPath(undefined)
   }
-  function handleSelect(pageList: WikiPageEntity[]): void {
-    setTags(pageList.map(tag => tag.uuid))
+  function handleSelect(pageList: NoteDto[]): void {
+    setTags(pageList.map(tag => tag.id))
   }
   function handleCreate() {
-    tags.length > 0 && listUpsert(editor, tags, path)
+    tags.length > 0 &&
+      listUpsert(
+        editor,
+        tags.map(id => id.toString()),
+        path,
+      )
     handleClose()
   }
 

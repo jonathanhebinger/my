@@ -32,6 +32,7 @@ import LeafMarkButton from './LeafMarkButton'
 import PageLinkButton from './ElementPageLinkButton'
 import toggleMark from './utils/toggleMark'
 import PageListButton from './ElementPageListButton'
+import TodoButton from './ElementTodoButton'
 
 const HOTKEYS: { [index: string]: keyof Omit<FormattedText, 'text'> } = {
   'mod+b': 'bold',
@@ -50,6 +51,9 @@ const wrapEditor = (editor: Editor) => {
     return ['page'].includes(element.type) || isInline(element)
   }
   editor.openPageLinkDialog = () => {
+    throw new Error('need override')
+  }
+  editor.openPageListDialog = () => {
     throw new Error('need override')
   }
 
@@ -143,6 +147,7 @@ export default function RichTextEditor({
           </ElementTypeButton>
           <PageLinkButton />
           <PageListButton />
+          <TodoButton />
         </ButtonGroup>
 
         <ButtonGroup size="small" sx={{ padding: 0.5 }}>

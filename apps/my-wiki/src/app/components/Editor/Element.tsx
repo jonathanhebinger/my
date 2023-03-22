@@ -2,6 +2,7 @@ import { Typography } from '@mui/material'
 import { RenderElementProps } from 'slate-react'
 import { ElementPageLink } from './ElementPageLink'
 import { ElementPageList } from './ElementPageList'
+import ElementTodo from './ElementTodo'
 
 export default function WikiElement({
   attributes,
@@ -63,6 +64,12 @@ export default function WikiElement({
         <ElementPageList element={element} attributes={attributes}>
           {children}
         </ElementPageList>
+      )
+    case 'todo':
+      return (
+        <ElementTodo element={element} attributes={attributes}>
+          {children}
+        </ElementTodo>
       )
     default:
       return (

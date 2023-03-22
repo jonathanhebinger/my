@@ -1,7 +1,7 @@
 import { StateCategoryUuid } from './stateCategory'
-import { Uuid } from './uuid'
+import { Id } from './uuid'
 
-export type StateUuid = Uuid<'state'>
+export type StateUuid = Id
 export type StateBase = {
   uuid: StateUuid
   name: string

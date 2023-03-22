@@ -1,10 +1,25 @@
-- states and actions tracking for myself
-  - states and actions logs
-  - states and actions creation
-  - states and actions analysis
-  - grouping
-- states and actions tracking for others
-  - scalability
-  - optimisations
-  - security
-  - sharing
+# My Life
+
+Done
+
+- states + events : number / select
+  - journaling
+  - creation
+  - no db
+  - navigation journaling / creation
+- tags
+  - filter
+- grouping
+  - item folder
+- user
+- save online
+  - item
+  - data
+
+Todo
+
+- rich data
+  - time
+  - total
+- improve item edit
+- online app

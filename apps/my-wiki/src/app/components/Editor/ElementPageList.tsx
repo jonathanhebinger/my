@@ -1,19 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Edit, Tag } from '@mui/icons-material'
-import {
-  Button,
-  Chip,
-  IconButton,
-  Link,
-  List,
-  ListItem,
-  Stack,
-} from '@mui/material'
+import { Link, Stack } from '@mui/material'
 import { PropsWithChildren } from 'react'
 import { ReactEditor, useReadOnly, useSlateStatic } from 'slate-react'
-import { useWikiPageDatabase } from '../../hooks/usePageDatabase'
-import { useWikiOpenedPageList } from '../../hooks/usePageOpenedList'
+import { useNotebookNoteContext } from '../../hooks/useNote'
+import { useOpenedNoteList } from '../../hooks/useNoteOpenedList'
 import { PageListElement } from '../../types/slate'
 
 export function ElementPageList({
@@ -23,27 +14,29 @@ export function ElementPageList({
   element: PageListElement
   attributes: any
 }>) {
-  const { getMany, database } = useWikiPageDatabase()
-  const { open } = useWikiOpenedPageList()
+  const { getMany, database } = useNotebookNoteContext()
+  const { open } = useOpenedNoteList()
   const readOnly = useReadOnly()
 
   const editor = useSlateStatic()
 
   const tags = getMany(element.tags).map(page => {
     return readOnly ? (
-      <Link onClick={() => open(page.uuid)}>#{page.name}</Link>
+      <Link onClick={() => open(page.id)}>#{page.name}</Link>
     ) : (
       <Stack direction="row">#{page.name}</Stack>
     )
   })
   const list = database
     .filter(page => {
-      return element.tags.every(tag => page.tags.includes(tag))
+      return element.tags.every(tag =>
+        page.tags.some(id => id.toString() === tag),
+      )
     })
     .map(page => {
       return (
         <li>
-          <Link onClick={() => open(page.uuid)}>{page.name}</Link>
+          <Link onClick={() => open(page.id)}>{page.name}</Link>
         </li>
       )
     })

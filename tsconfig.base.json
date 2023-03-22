@@ -13,10 +13,12 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "strictNullChecks": true,
     "baseUrl": ".",
     "paths": {
-      "@my/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "@my/shared/firebase": ["libs/shared/firebase/src/index.ts"],
+      "@my/api": ["libs/api/src/index.ts"],
+      "@my/http": ["libs/http/src/index.ts"],
+      "@my/models": ["libs/models/src/index.ts"],
       "@my/shared/helpers": ["libs/shared/helpers/src/index.ts"],
       "@my/shared/redux": ["libs/shared/redux/src/index.ts"],
       "@my/shared/types": ["libs/shared/types/src/index.ts"]

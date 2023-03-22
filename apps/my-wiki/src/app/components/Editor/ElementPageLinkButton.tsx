@@ -7,13 +7,13 @@ import {
   Stack,
   TextField,
 } from '@mui/material'
+import { Id, NoteDto } from '@my/shared/types'
 import { useMemo, useState } from 'react'
 import { Editor, Element, Node, Path, Transforms } from 'slate'
 import { useSlate } from 'slate-react'
-import { useWikiPageDatabase } from '../../hooks/usePageDatabase'
+import { useNotebookNoteContext } from '../../hooks/useNote'
 import { PageLinkElement } from '../../types/slate'
-import { WikiPageEntity } from '../../types/wiki'
-import PageSelector from '../PageSelector'
+import PageSelector from '../NoteSelector'
 
 function match(n: Node) {
   return !Editor.isEditor(n) && Element.isElement(n) && n.type === 'page'
@@ -45,17 +45,17 @@ function linkUpsert(editor: Editor, page: string, name: string, at?: Path) {
 }
 
 export default function PageLinkButton() {
-  const { getOne } = useWikiPageDatabase()
+  const { getOne } = useNotebookNoteContext()
   const editor = useSlate()
 
   const [open, setOpen] = useState(false)
   const [path, setPath] = useState<Path>()
   const [name, setName] = useState<string>('')
-  const [uuid, setUuid] = useState<string>('')
+  const [id, setId] = useState<Id>()
 
   const page = useMemo(() => {
-    return uuid ? getOne(uuid) : undefined
-  }, [getOne, uuid])
+    return id ? getOne(id) : undefined
+  }, [getOne, id])
 
   function handleOpen() {
     const pair = linkSelect(editor)
@@ -63,7 +63,7 @@ export default function PageLinkButton() {
     if (pair) {
       const [link, path] = pair
 
-      setUuid(link.page)
+      setId(link.page)
       setName(link.name)
       setPath(path)
     }
@@ -72,18 +72,18 @@ export default function PageLinkButton() {
   }
   function handleClose() {
     setOpen(false)
-    setUuid('')
+    setId(undefined)
     setName('')
     setPath(undefined)
   }
-  function handleSelect(pageList: WikiPageEntity[]): void {
+  function handleSelect(pageList: NoteDto[]): void {
     const page = pageList[0]
 
-    setUuid(page?.uuid || '')
+    setId(page?.id || '')
     setName(page?.name || '')
   }
   function handleCreate() {
-    page && linkUpsert(editor, page.uuid, name, path)
+    page && linkUpsert(editor, page.id.toString(), name, path)
     handleClose()
   }
 
@@ -101,7 +101,7 @@ export default function PageLinkButton() {
             <PageSelector
               label="Page"
               onSelect={handleSelect}
-              selected={uuid ? [uuid] : []}
+              selected={id ? [id] : []}
             />
             <TextField
               label="Name"

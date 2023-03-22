@@ -3,11 +3,11 @@ import { getDoc, setDoc } from 'firebase/firestore'
 
 import { getUserRef } from '@my/shared/firebase'
 import { selectUser } from './selectors'
-import { User } from '@my/shared/types'
+import { UserData } from '@my/shared/types'
 
-export type UserCreatePayload = User & { uuid: string }
+export type UserCreatePayload = UserData & { uuid: string }
 
-export const actionUserUpdate = createAction<Partial<User>>('user/create')
+export const actionUserUpdate = createAction<Partial<UserData>>('user/create')
 
 export const actionUserCreate = createAsyncThunk<void, UserCreatePayload>(
   'user/create',

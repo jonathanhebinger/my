@@ -10,55 +10,35 @@ export type CustomEditor = BaseEditor &
     openPageLinkDialog(path: Path): void
   }
 
-export type ParagraphElement = {
-  type: 'paragraph'
+export type BaseElement<Type extends string> = {
+  type: Type
+  align?: ElementAlign
   children: CustomText[]
 }
-export type Heading4Element = {
-  type: 'h4'
-  children: CustomText[]
-}
-export type Heading5Element = {
-  type: 'h5'
-  children: CustomText[]
-}
-export type Heading6Element = {
-  type: 'h6'
-  children: CustomText[]
-}
-export type BlockquoteElement = {
-  type: 'block-quote'
-  children: CustomText[]
-}
-export type BulletedListElement = {
-  type: 'bulleted-list'
-  children: CustomText[]
-}
-export type NumberedListElement = {
-  type: 'numbered-list'
-  children: CustomText[]
-}
-export type ListItemElement = {
-  type: 'list-item'
-  children: CustomText[]
-}
-export type PageLinkElement = {
-  type: 'page'
+
+export type ParagraphElement = BaseElement<'paragraph'>
+export type Heading4Element = BaseElement<'h4'>
+export type Heading5Element = BaseElement<'h5'>
+export type Heading6Element = BaseElement<'h6'>
+export type BlockquoteElement = BaseElement<'block-quote'>
+export type BulletedListElement = BaseElement<'bulleted-list'>
+export type NumberedListElement = BaseElement<'numbered-list'>
+export type ListItemElement = BaseElement<'list-item'>
+export type PageLinkElement = BaseElement<'page'> & {
   page: string
   name: string
-  children: CustomText[]
 }
-export type PageListElement = {
-  type: 'page-list'
+export type PageListElement = BaseElement<'page-list'> & {
   tags: string[]
-  children: CustomText[]
+}
+export type TodoElement = BaseElement<'todo'> & {
+  done: boolean
+  ref?: string
 }
 
 export type ElementAlign = 'left' | 'center' | 'right' | 'justify'
 
-export type CustomElement = {
-  align?: ElementAlign
-} & (
+export type CustomElement =
   | ParagraphElement
   | Heading4Element
   | Heading5Element
@@ -69,7 +49,7 @@ export type CustomElement = {
   | ListItemElement
   | PageLinkElement
   | PageListElement
-)
+  | TodoElement
 
 export type FormattedText = {
   text: string
