@@ -1,10 +1,12 @@
 import constate from 'constate'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router'
 import { useAuth } from '../hooks/useAuth'
 
 export const [AuthContextProvider, useAuthContext] = constate(() => {
   const navigate = useNavigate()
+  const navigateRef = useRef(navigate)
+  navigateRef.current = navigate
   const { user, loaded, signedIn, signIn, signOut, signUp } = useAuth({
     onSignIn() {
       navigate('tracking')
@@ -17,9 +19,10 @@ export const [AuthContextProvider, useAuthContext] = constate(() => {
     },
   })
 
+  const connected = user !== null
   useEffect(() => {
-    if (!loaded) return
-  }, [user, loaded, navigate])
+    if (connected) navigateRef.current('tracking')
+  }, [connected])
 
   return {
     user,
