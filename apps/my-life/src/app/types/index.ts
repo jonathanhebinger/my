@@ -34,3 +34,30 @@ export type Data = {
   date: number
   data: Record<string, number[]>
 }
+
+export type GoalBase = {
+  uuid: string
+  item: string
+  period: {
+    type: 'day' | 'week' | 'month' | 'year'
+    count: number
+    start: number
+  }
+}
+export type GoalNumber = GoalBase & {
+  type: '<' | '<=' | '=' | '>=' | '>'
+  goal: number
+}
+export type GoalSelect = GoalBase & {
+  type:
+    | 'not-with-all'
+    | 'not-with-one'
+    | 'not-in-all'
+    | 'not-in-one'
+    | 'in-one'
+    | 'in-all'
+    | 'with-one'
+    | 'with-all'
+  goal: number[]
+}
+export type Goal = GoalNumber | GoalSelect

@@ -23,3 +23,4 @@ Todo
   - total
 - improve item edit
 - online app
+- goal

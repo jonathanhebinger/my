@@ -20,7 +20,6 @@
       "@my/http": ["libs/http/src/index.ts"],
       "@my/models": ["libs/models/src/index.ts"],
       "@my/shared/helpers": ["libs/shared/helpers/src/index.ts"],
-      "@my/shared/redux": ["libs/shared/redux/src/index.ts"],
       "@my/shared/types": ["libs/shared/types/src/index.ts"]
     }
   },

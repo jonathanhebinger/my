@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 
 export function usePageCloseOrRefresh(callback: () => void) {
   useEffect(() => {
-    window.addEventListener('unload', callback)
+    window.addEventListener('beforeunload', callback)
 
-    return () => window.removeEventListener('unload', callback)
+    return () => window.removeEventListener('beforeunload', callback)
   }, [callback])
 }

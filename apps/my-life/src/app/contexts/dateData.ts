@@ -1,7 +1,8 @@
 import constate from 'constate'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import useDate from '../hooks/useDate'
 import useModified from '../hooks/useModified'
+import { usePageCloseOrRefresh } from '../hooks/usePageClose'
 import usePrevious from '../hooks/usePrevious'
 import useUserUuid from '../hooks/useUserUuid'
 import { Item, ItemData } from '../types'
@@ -38,24 +39,23 @@ export const [DateDataContextProvider, useDateDataContext] = constate(() => {
   }, [dateData, changes])
   const dateDataPrevious = usePrevious(dateDataMerged)
 
-  useEffect(() => {
-    if (!dateDataModified) return
+  const update = useCallback(() => {
     if (!Object.keys(changes).length) return
 
     if (dateDataPrevious.uuid) {
       updateDateData(dateDataPrevious)
+      console.log(dateDataPrevious)
     } else {
       createDateData(dateDataPrevious)
     }
 
     setChanges({})
-  }, [
-    dateDataModified,
-    changes,
-    dateDataPrevious,
-    createDateData,
-    updateDateData,
-  ])
+  }, [changes, dateDataPrevious, createDateData, updateDateData])
+
+  usePageCloseOrRefresh(update)
+  useEffect(() => {
+    if (dateDataModified) update()
+  }, [dateDataModified, update])
 
   function upsert(item: Item, data: ItemData) {
     setChanges(record => ({ ...record, [item.uuid]: data }))

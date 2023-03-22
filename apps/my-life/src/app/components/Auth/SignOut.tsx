@@ -1,4 +1,4 @@
-import Button from '@mui/material/Button'
+import { Button } from '@mui/material'
 import { useAuthContext } from '../../contexts/auth'
 
 export default function MyLifeSignOut() {
