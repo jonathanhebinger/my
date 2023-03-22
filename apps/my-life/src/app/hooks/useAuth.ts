@@ -6,7 +6,15 @@ import {
 import { useState, useEffect } from 'react'
 import { auth } from '../firebase'
 
-export function useAuth() {
+export function useAuth({
+  onSignIn,
+  onSignOut,
+  onSignUp,
+}: {
+  onSignIn?: () => void
+  onSignUp?: () => void
+  onSignOut?: () => void
+}) {
   const [loaded, setLoaded] = useState(false)
   const [user, setUser] = useState<User | null>(null)
   const signedIn = user !== null
@@ -21,6 +29,7 @@ export function useAuth() {
   async function signIn(mail: string, pass: string) {
     try {
       await signInWithEmailAndPassword(auth, mail, pass)
+      onSignIn && onSignIn()
     } catch (error) {
       console.error(error)
     }
@@ -28,6 +37,7 @@ export function useAuth() {
   async function signUp(name: string, mail: string, pass: string) {
     try {
       await createUserWithEmailAndPassword(auth, mail, pass)
+      onSignUp && onSignUp()
     } catch (error) {
       console.error(error)
     }
@@ -36,6 +46,7 @@ export function useAuth() {
     try {
       await auth.signOut()
       setUser(null)
+      onSignOut && onSignOut()
     } catch (error) {
       console.error(error)
     }

@@ -15,7 +15,7 @@ import MyLifeTrackingPage from '../pages/Tracking'
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="" element={<MyLifeRootPage />}>
-      <Route path="/sign">
+      <Route path="sign">
         <Route path="" element={<MyLifeSignPage />} />
         <Route path="in" element={<MyLifeSignIn />} />
         <Route path="up" element={<MyLifeSignIn />} />

@@ -4,13 +4,29 @@ import { useNavigate } from 'react-router'
 import { useAuth } from '../hooks/useAuth'
 
 export const [AuthContextProvider, useAuthContext] = constate(() => {
-  const { user, loaded, signedIn, signIn, signOut, signUp } = useAuth()
   const navigate = useNavigate()
+  const { user, loaded, signedIn, signIn, signOut, signUp } = useAuth({
+    onSignIn() {
+      navigate('tracking')
+    },
+    onSignUp() {
+      navigate('item')
+    },
+    onSignOut() {
+      navigate('sign')
+    },
+  })
 
   useEffect(() => {
     if (!loaded) return
-    if (!user) navigate('/sign')
   }, [user, loaded, navigate])
 
-  return { user, loaded, signedIn, signIn, signOut, signUp }
+  return {
+    user,
+    loaded,
+    signedIn,
+    signIn,
+    signOut,
+    signUp,
+  }
 })
